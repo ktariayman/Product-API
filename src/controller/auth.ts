@@ -1,10 +1,12 @@
-import { Request, Response } from "express";
+import { Request, response, Response } from "express";
 import { RegisterValidation } from "../validation/registerValidation";
 import {getManager} from "typeorm"
 import { User } from "../entity/user";
 import bcryptjs from "bcryptjs";
 import jsonwebtoken from 'jsonwebtoken';
 const { sign, decode, verify } = jsonwebtoken;
+import dotenv from 'dotenv';
+dotenv.config()
 
 export const Register = async (req:Request, res:Response) => {
     const body = req.body;
@@ -59,22 +61,14 @@ export const Login = async (req:Request, res:Response) => {
 }
 
 export const authenticatedUser = async (req:Request, res:Response) => {
-    const jwt = req.cookies['jwt'];
-    const payload: any= verify(jwt , "secret")
-    if(!payload) {
-        return res.status(401).send({message: 'unauthenticated'});
-    }
-    const repository = getManager().getRepository(User)
-    const user = await repository.findOne(
-        { where:
-            payload.id
-        }
-    )
-    if(!user){
-        return res.status(401).send({message: 'user not found'});
+    const {password , ...user} = req['user']
+    res.send(user)
+}
 
-    }
-    const {password, ...userWithoutPassword}= user
-    
-    res.send(userWithoutPassword)
+
+export const logout = async (req:Request, res:Response) => {
+    res.cookie('jwt', '' , {maxAge: 0})
+    res.send({
+        message: 'success logout'
+    })
 }
