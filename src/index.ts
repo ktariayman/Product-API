@@ -3,7 +3,9 @@ import cors from "cors";
 import { routes } from './routes';
 import { createConnection } from "typeorm"
 import cookieParser from 'cookie-parser';
-
+import dotenv from 'dotenv';
+dotenv.config()
+console.log(process.env.SECRET_KEY)
 createConnection()
     .then((Connection) => {
         const app = express();
