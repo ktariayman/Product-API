@@ -12,7 +12,7 @@ createConnection()
         app.use(express.json())
         app.use(cookieParser())
         app.use(cors({
-            credentials :true, // for exemple front end can get the cookies
+            credentials : true, // for exemple front end can get the cookies
             origin :["http://localhost:3000"]
         }))
         routes(app)
