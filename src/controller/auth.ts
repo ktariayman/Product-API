@@ -48,27 +48,68 @@ export const Login = async (req:Request, res:Response) => {
             message:"invalid credentials",
         })
     }
-    const payload = {
-        id : user.id,
-    }
-    const token = sign(payload , "secret");
+    const token = sign({id : user.id} , "secret");
     res.cookie('jwt' , token , {
         httpOnly: true,
-        maxAge: 30*24*60*60*3600 // 30days
+        maxAge: 24 * 60 * 60 * 1000 
     })
     const {password , ...userWithoutPassword}= user
-    res.send("success" )
+    res.send(userWithoutPassword )
 }
 
 export const authenticatedUser = async (req:Request, res:Response) => {
     const {password , ...user} = req['user']
     res.send(user)
+    
 }
 
 
 export const logout = async (req:Request, res:Response) => {
     res.cookie('jwt', '' , {maxAge: 0})
-    res.send({
-        message: 'success logout'
+    
+        return res.send({
+            message: 'success logout'
+        })
+    
+}
+
+
+export const UpdateInfo = async (req:Request, res:Response) => {
+    const user= req['user']
+    if(req.body.email || req.body.password || req.body.paddword_confirm) {
+        return res.status(400).send({
+            message : "you can't update these info(s) now , please contact admin"
+        })
+    }
+    // const bodyData= req.body
+    // const {email , ...bodyDataWithoutEmail} = bodyData
+    const repository = getManager().getRepository(User)
+    await repository.update(user.id , req.body)
+    const data  =  await repository.findOne(
+        { where:
+            { id: user.id }
+        })
+    if(!data) {
+        return res.status(404).send({
+            message:"invalid credentials",
+        })
+    }
+        const {password , ...userWithoutPassword} =data;
+    res.send(userWithoutPassword)    
+}
+export const UpdatePassword = async (req:Request, res:Response) => {
+    const user= req['user']
+    console.log(req.body)
+    if(req.body.password !== req.body.password_confirm){
+        return res.status(404).send({
+            message : "Password do not match",
+        })
+    }
+    const repository = getManager().getRepository(User)
+    const hashedPassword  = await bcryptjs.hash(req.body.password , 10)
+    await repository.update(user.id , {
+        password : hashedPassword
     })
+    const {password , ...userWithoutPassword} = user;
+    res.send(userWithoutPassword)
 }
