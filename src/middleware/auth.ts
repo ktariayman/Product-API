@@ -7,24 +7,15 @@ import jsonwebtoken from 'jsonwebtoken';
 export const authMiddleware = async (req: Request, res: Response , next :Function) => {
    try {
     const jwt = req.cookies['jwt'];
-    console.log(jwt)
-    const payload: any= verify(jwt ,"secret")
-    console.log(payload)
+    const payload: any= verify(jwt ,String(process.env.SECRET_KEY));
     if(!payload) {
-        return res.status(401).send({message: 'unauthenticated'});
+      return res.status(401).send({message: 'unauthenticated'});
     }
     const repository = getManager().getRepository(User)
-    console.log(repository)
-    const user = await repository.findOne({
-        where: {
-          id: payload.id,
-        },
-      });
-      console.log(user)
+    const user = await repository.findOne({where: {id: payload.id}});
     if(!user){
-        return res.status(401).send({message: 'user not found'});
+      return res.status(401).send({message: 'user not found'});
     }
-    // const {password, ...userWithoutPassword}= user
     req["user"] = user;
     next()
    } catch (error) {

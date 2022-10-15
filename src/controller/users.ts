@@ -21,12 +21,11 @@ export const createUser = async (req:Request, res:Response) => {
 
     const repository = getManager().getRepository(User)
     const userExist =  await repository.findOne(
-        { where:
+        {where:
             { email: req.body.email }
         }
     )
     if(userExist){
-
         return res.status(404).send({
             message:"user already exists",
         })
@@ -44,11 +43,11 @@ export const createUser = async (req:Request, res:Response) => {
 
 export const getUser = async (req:Request, res:Response) => {
     const repository = getManager().getRepository(User)
-    const user = await repository.findOne(    { 
+    const user = await repository.findOne({ 
         relations: {
         role    :true ,
-    },
-        where: {id: parseInt(req.params.id, 10)}}  );
+        },
+        where: {id: parseInt(req.params.id, 10)}});
     if(!user){
 
         return res.status(404).send({
