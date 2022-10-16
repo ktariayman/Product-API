@@ -44,9 +44,7 @@ export const createUser = async (req:Request, res:Response) => {
 export const getUser = async (req:Request, res:Response) => {
     const repository = getManager().getRepository(User)
     const user = await repository.findOne({ 
-        relations: {
-        role    :true ,
-        },
+        relations: ['role'],
         where: {id: parseInt(req.params.id, 10)}});
     if(!user){
 
@@ -64,9 +62,7 @@ export const updateUser = async (req:Request, res:Response) => {
     const repository = getManager().getRepository(User)
     const user = await repository.findOne(
         { 
-            relations: {
-            role    :true ,
-        },
+            relations: ['role'],
             where: {id: parseInt(req.params.id, 10)}}
     );
     if(!user){
