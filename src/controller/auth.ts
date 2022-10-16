@@ -48,7 +48,7 @@ export const Login = async (req:Request, res:Response) => {
             message:"invalid credentials",
         })
     }
-    const token = sign({id : user.id} , "secret");
+    const token = sign({id : user.id} ,String(process.env.SECRET_KEY));
     res.cookie('jwt' , token , {
         httpOnly: true,
         maxAge: 24 * 60 * 60 * 1000 
@@ -60,7 +60,6 @@ export const Login = async (req:Request, res:Response) => {
 export const authenticatedUser = async (req:Request, res:Response) => {
     const {password , ...user} = req['user']
     res.send(user)
-    
 }
 
 
@@ -94,12 +93,11 @@ export const UpdateInfo = async (req:Request, res:Response) => {
             message:"invalid credentials",
         })
     }
-        const {password , ...userWithoutPassword} =data;
+    const {password , ...userWithoutPassword} =data;
     res.send(userWithoutPassword)    
 }
 export const UpdatePassword = async (req:Request, res:Response) => {
     const user= req['user']
-    console.log(req.body)
     if(req.body.password !== req.body.password_confirm){
         return res.status(404).send({
             message : "Password do not match",

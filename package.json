@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.ts",
   "scripts": {
-    "start": "nodemon src/index.ts"
+    "start": "nodemon src/index.ts",
+    "roles:seed": "ts-node src/seeder/roles.ts"
   },
   "repository": {
     "type": "git",
@@ -24,6 +25,7 @@
     "@types/express": "^4.17.14",
     "@types/jsonwebtoken": "^8.5.9",
     "@types/node": "^18.8.5",
+    "jest": "^29.2.0",
     "nodemon": "^2.0.20",
     "ts-node": "^10.9.1",
     "typescript": "^4.8.4"
@@ -38,6 +40,7 @@
     "express-validation": "^4.1.0",
     "jsonwebtoken": "^8.5.1",
     "mysql2": "^2.3.3",
+    "ts-jest": "^29.0.3",
     "typeorm": "^0.3.10"
   }
 }
