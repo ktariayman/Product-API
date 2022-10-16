@@ -1,4 +1,5 @@
 import { Router } from "express";
+import  express  from "express";
 import multer from "multer";
 import { extname } from "path";
 import { authenticatedUser, Login, logout, Register, UpdateInfo, UpdatePassword } from "./controller/auth";
@@ -39,5 +40,6 @@ export const routes = (router :Router) => {
     router.delete('/api/roles/:id' ,authMiddleware, deleteProduct)
 
     router.post('/api/upload' ,authMiddleware, upload)
+    router.use('/api/upload' ,express.static("./uploads"))
 
 }
