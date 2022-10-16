@@ -3,9 +3,21 @@ import {getManager} from "typeorm"
 import { Product } from "../entity/product";
 
 export const getAllProducts= async (req:Request, res:Response) => {
+    const take = 12;
+    const page = parseInt(req.query.page as string ||'1')
     const repository = getManager().getRepository(Product)
-    const products = await repository.find()
-    res.send(products)
+    const [data , total] = await repository.findAndCount({
+        take,
+        skip:(page-1) *take,
+    })
+    res.send({
+        data,
+        meta:{
+            total,
+            page,
+            last_page: Math.ceil(total/take),
+        }
+    })
 }
 export const createProduct = async (req:Request, res:Response) => {
 
