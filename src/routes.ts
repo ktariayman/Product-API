@@ -1,5 +1,8 @@
 import { Router } from "express";
+import multer from "multer";
+import { extname } from "path";
 import { authenticatedUser, Login, logout, Register, UpdateInfo, UpdatePassword } from "./controller/auth";
+import { upload } from "./controller/image";
 import { Permissions } from "./controller/permissions";
 import { createProduct, deleteProduct, getAllProducts, getProduct, updateProduct } from "./controller/product";
 import { createRole, deleteRole, getAllRoles, getRole, updateRole } from "./controller/role";
@@ -34,5 +37,7 @@ export const routes = (router :Router) => {
     router.post('/api/roles' ,authMiddleware, createProduct)
     router.put('/api/roles/:id' ,authMiddleware, updateProduct)
     router.delete('/api/roles/:id' ,authMiddleware, deleteProduct)
+
+    router.post('/api/upload' ,authMiddleware, upload)
 
 }
