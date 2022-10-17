@@ -4,15 +4,25 @@ import { User } from "../entity/user";
 import bcryptjs from "bcryptjs";
 
 export const getAllUsers = async (req:Request, res:Response) => {
+    const take = 12;
+    const page = parseInt(req.query.page as string ||'1')
     const repository = getManager().getRepository(User)
-    const users = await repository.find({
-        relations :["role"]
+    const [data , total] = await repository.findAndCount({
+        take,
+        skip: (page - 1) * take,
+        relations:["role"]
     })
-    const usersWithourPassword = users.map(u => {
-        const {password , ...data} = u
-        return data
+    res.send({
+        data: data.map(u => {
+            const {password , ...data} = u
+            return data
+        }),
+        meta:{
+            total,
+            page,
+            last_page: Math.ceil(total/take),
+        }
     })
-    res.send(usersWithourPassword)
 }
 export const createUser = async (req:Request, res:Response) => {
     const {role_id , ...body} = req.body 
