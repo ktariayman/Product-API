@@ -10,6 +10,7 @@ import { createRole, deleteRole, getAllRoles, getRole, updateRole } from "./cont
 import { createUser, deleteUser, getAllUsers, getUser, updateUser } from "./controller/users";
 import { authMiddleware } from "./middleware/auth";
 import { getAllOrders } from "./controller/order";
+import { permissionMiddleware } from "./middleware/permission";
 
 export const routes = (router :Router) => {
     // auth Controller
@@ -23,11 +24,11 @@ export const routes = (router :Router) => {
 
     //user Controller
     
-    router.get('/api/users' ,authMiddleware, getAllUsers)
-    router.get('/api/users/:id' ,authMiddleware, getUser)
-    router.post('/api/users' ,authMiddleware, createUser)
-    router.put('/api/users/:id' ,authMiddleware, updateUser)
-    router.delete('/api/users/:id' ,authMiddleware, deleteUser)
+    router.get('/api/users' ,authMiddleware,permissionMiddleware("users"), getAllUsers)
+    router.get('/api/users/:id' ,authMiddleware, permissionMiddleware("users"),getUser)
+    router.post('/api/users' ,authMiddleware, permissionMiddleware("users"),createUser)
+    router.put('/api/users/:id' ,authMiddleware,permissionMiddleware("users"), updateUser)
+    router.delete('/api/users/:id' ,authMiddleware, permissionMiddleware("users"),deleteUser)
 
     router.get('/api/permissions' ,authMiddleware, Permissions)
     
@@ -36,16 +37,16 @@ export const routes = (router :Router) => {
     router.get('/api/roles' ,authMiddleware, getAllRoles)
     router.get('/api/roles/:id' ,authMiddleware, getRole)
     router.post('/api/roles' ,authMiddleware, createRole)
-    router.put('/api/roles/:id' ,authMiddleware, updateRole)
+    router.put('/api/roles/:id' ,authMiddleware, permissionMiddleware("roles"),updateRole)
     router.delete('/api/roles/:id' ,authMiddleware, deleteRole)
     
     //products Controller
 
-    router.get('/api/products' ,authMiddleware, getAllProducts)
-    router.get('/api/roles/:id' ,authMiddleware, getProduct)
-    router.post('/api/roles' ,authMiddleware, createProduct)
-    router.put('/api/roles/:id' ,authMiddleware, updateProduct)
-    router.delete('/api/roles/:id' ,authMiddleware, deleteProduct)
+    router.get('/api/products' ,authMiddleware, permissionMiddleware("products"), getAllProducts)
+    router.get('/api/products/:id' ,authMiddleware,permissionMiddleware("products") , getProduct)
+    router.post('/api/products' ,authMiddleware, permissionMiddleware("products") ,createProduct)
+    router.put('/api/products/:id' ,authMiddleware, permissionMiddleware("products") ,updateProduct)
+    router.delete('/api/products/:id' ,authMiddleware, permissionMiddleware("products") ,deleteProduct)
     
     //upload Controller
     
