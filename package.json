@@ -6,7 +6,8 @@
   "scripts": {
     "start": "nodemon src/index.ts",
     "roles:seed": "ts-node src/seeder/roles.ts",
-    "products:seed": "ts-node src/seeder/products.ts"
+    "products:seed": "ts-node src/seeder/products.ts",
+    "orders:seed": "ts-node src/seeder/orders.ts"
   },
   "repository": {
     "type": "git",
