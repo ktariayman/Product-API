@@ -13,7 +13,7 @@ createConnection()
         app.use(cookieParser())
         app.use(cors({
             credentials : true, // for exemple front end can get the cookies
-            origin :["http://localhost:3000"]
+            origin :["http://localhost:8080"]
         }))
         routes(app)
         app.listen(8000, ()=> {
