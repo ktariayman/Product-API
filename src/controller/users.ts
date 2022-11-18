@@ -4,7 +4,7 @@ import { User } from "../entity/user";
 import bcryptjs from "bcryptjs";
 
 export const getAllUsers = async (req:Request, res:Response) => {
-    const take = 12;
+    const take = 5;
     const page = parseInt(req.query.page as string ||'1')
     const repository = getManager().getRepository(User)
     const [data , total] = await repository.findAndCount({
@@ -45,7 +45,7 @@ export const createUser = async (req:Request, res:Response) => {
         password:hashedpassword,
         role: {
             id:role_id,
-        }
+        },
     })
     const {password , ...userWithoutPassword} = user
     res.send(userWithoutPassword)
@@ -102,12 +102,6 @@ export const updateUser = async (req:Request, res:Response) => {
 
     res.send(userWithoutPassword)
 }
-
-
-
-
-
-
 
 export const deleteUser = async (req:Request, res:Response) => {
     const repository = getManager().getRepository(User)

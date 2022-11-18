@@ -5,6 +5,8 @@ export const permissionMiddleware = ( access: string ) => {
     return async (req: Request, res: Response , next :Function) => {
         const user: User = req['user']
         const permissions = user.role.permissions;
+        // if(access === "users" && user.role.name !=="Admin") return res.json("only admin hass access")
+
         if(req.method === 'GET'){
             if(!permissions.some(perm => (perm.name ===`view_${access}` ||(perm.name === `edit_${access}`)))){
                 return res.send({

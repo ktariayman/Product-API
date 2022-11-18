@@ -20,7 +20,7 @@ export const routes = (router :Router) => {
     router.put('/api/users/info' ,authMiddleware, UpdateInfo)
     router.put('/api/users/password' ,authMiddleware, UpdatePassword)
 
-    //user Controller
+    //user Controller /// admin only
     
     router.get('/api/users' ,authMiddleware,permissionMiddleware("users"), getAllUsers)
     router.get('/api/users/:id' ,authMiddleware, permissionMiddleware("users"),getUser)
