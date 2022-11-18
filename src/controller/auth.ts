@@ -10,6 +10,7 @@ dotenv.config()
 
 export const Register = async (req:Request, res:Response) => {
     const body = req.body;
+    const id= 2;
     const {error} = RegisterValidation.validate(body)
     if(error){
         return res.status(404).send(error.details);
@@ -24,7 +25,8 @@ export const Register = async (req:Request, res:Response) => {
         first_name: body.first_name,
         last_name: body.last_name,
         email: body.email,
-        password : await bcryptjs.hash(body.password , 10)
+        password : await bcryptjs.hash(body.password , 10),
+        role_id:id,
     })
     res.send(user);
 }

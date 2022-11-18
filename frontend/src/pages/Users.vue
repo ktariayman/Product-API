@@ -17,13 +17,15 @@
           </thead>
           <tbody>
             <tr v-for="user in users" :key="user.id">
+             
               <td >{{user.id}}</td>
               <td>{{user.first_name}}  {{user.last_name}}</td>
               <td>{{user.email}}</td>
               <td>{{user.role.name}}</td>
               <td>
                 <div class="btn-group mr-2">
-                    <a href="javascript:void(0)" class="btn btn-sm btn-outline-secondary" @click="del(user.id)"> Delete</a>
+                  <router-link :to="`/users/${user.id}/edit`" class="btn btn-sm btn-outline-secondary" > Edit</router-link>
+                  <a href='javascript:void(0)' class="btn btn-sm btn-outline-secondary" @click="del(user.id)"> Delete</a>
                 </div>
               </td>
           
@@ -60,7 +62,9 @@ export default {
       const lastPage = ref(0)
       const load = async()=> {
           const {data} =await axios.get(`users?page=${page.value}`)
+          console.log('users before', data.data)
           users.value= data.data
+          console.log('users after', data.data)
           lastPage.value= data.meta.last_page;
       }
       onMounted(load)

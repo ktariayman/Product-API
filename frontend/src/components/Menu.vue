@@ -7,9 +7,16 @@
               Dashboard
             </router-link>
           </li>
-          <li class="nav-item" v-if="role==='Admin'">
+          <li class="nav-item" >
+            <!-- v-if="role==='Admin'" -->
             <router-link active-class= "active"   class="nav-link "  to="/users">
               Users
+            </router-link>
+          </li>
+          <li class="nav-item" >
+            <!-- v-if="role==='Admin'" -->
+            <router-link active-class= "active"   class="nav-link "  to="/roles">
+              Roles
             </router-link>
           </li>
         </ul>
@@ -31,7 +38,13 @@ export default {
       const role = ref('')
       onMounted( async()=> {
         const {data} =await axios.get('user')
-        role.value = data.role.name
+        console.log('data.role',data.role.name)
+        if(data.role.name>0) {
+          role.value = data.role.name
+        }else{
+          role.value ='User'
+        }
+        console.log('data', data)
         console.log('role',role.value)
     })
     return {

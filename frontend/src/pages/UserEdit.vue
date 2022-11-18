@@ -26,7 +26,7 @@
 /* eslint-disable */ 
 import axios from 'axios';
 import {onMounted, reactive,ref} from 'vue'
-import { useRouter } from 'vue-router';
+import { useRoute, useRouter } from 'vue-router';
 export default {
     name :"UserCreate",
     setup(){
@@ -38,13 +38,21 @@ export default {
             role_id:''
         })
         const router = useRouter()
+        const route = useRoute()
 
         onMounted(async ()=> {
-            const {data} =await axios.get('roles')
-          roles.value= data
+            const roleResponse =await axios.get('roles')
+            roles.value= roleResponse.data
+            
+            const response = await axios(`users/${route.params.id}`)
+            console.log("response",response)
+            form.first_name = response.data.first_name
+            form.last_name = response.data.last_name
+            form.email = response.data.email
+            form.role_id = response.data.role.id
         });
         const submit = async () => {
-            await axios.post('users',form)
+            await axios.put(`users/${route.params.id}`,form)
             await router.push("/users")
 
         }
