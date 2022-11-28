@@ -27,4 +27,5 @@ export class Order {
         return this.order_items.reduce((sum, item) => sum+ item.quantity*item.price, 0)
     }
     
+    
 }

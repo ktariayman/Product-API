@@ -16,24 +16,27 @@
 
 <script  lang="ts">
 /* eslint-disable */ 
+import store from "@/store"
 import axios from "axios"
 import {onMounted} from "vue"
-import {ref} from "vue"
+import {ref,computed,watch} from "vue"
+import { useStore } from "vuex"
 export default {
     name:"Nav",
 setup(){
     const name = ref('')
-      onMounted( async()=> {
-        const {data} =await axios.get('user')
-        name.value = data.first_name +' ' +data.last_name
-    })
-    const logout = async ()=> {
-       await axios.post('logout')
-      }
-      return {
-        name,
-        logout
-      }
+    const store = useStore()
+    const user  = computed(()=> store.state.user)
+    watch(user , () =>{
+        name.value=user.value.first_name + ' ' + user.value.last_name
+        })  
+        const logout = async ()=> {
+            await axios.post('logout')
+        }
+        return {
+            name,
+            logout,
+        }
     }
 }
 

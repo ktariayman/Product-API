@@ -19,6 +19,21 @@
               Roles
             </router-link>
           </li>
+
+          <li class="nav-item" >
+            <!-- v-if="role==='Admin'" -->
+            <router-link active-class= "active"   class="nav-link "  to="/products">
+              products
+            </router-link>
+          </li>
+
+          
+          <li class="nav-item" >
+            <!-- v-if="role==='Admin'" -->
+            <router-link active-class= "active"   class="nav-link "  to="/orders">
+              orders
+            </router-link>
+          </li>
         </ul>
 
        
@@ -26,7 +41,7 @@
     </nav>
 </template>
 
-<script>
+<script lang='ts'>
 /* eslint-disable */ 
 import axios from "axios"
 import {onMounted} from "vue"

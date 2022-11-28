@@ -18,4 +18,8 @@ export class OrderItem {
     @JoinColumn({name: 'order_id'})
     order:Order;
 
+    get product_name() : number {
+        return this.product_name
+    }
+
 }
