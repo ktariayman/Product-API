@@ -31,6 +31,7 @@ export const Register = async (req:Request, res:Response) => {
     res.send(user);
 }
 
+
 export const Login = async (req:Request, res:Response) => {
     const repository = getManager().getRepository(User)
     const user =  await repository.findOne(
@@ -77,11 +78,13 @@ export const logout = async (req:Request, res:Response) => {
 
 export const UpdateInfo = async (req:Request, res:Response) => {
     const user= req['user']
-    if(req.body.email || req.body.password || req.body.paddword_confirm) {
+    if(!req.body.email || !req.body.first_name || !req.body.last_name) {
         return res.status(400).send({
             message : "you can't update these info(s) now , please contact admin"
         })
     }
+
+    
     // const bodyData= req.body
     // const {email , ...bodyDataWithoutEmail} = bodyData
     const repository = getManager().getRepository(User)

@@ -11,6 +11,7 @@ createConnection().then(async connection => {
             first_name: faker.internet.userName(),
             last_name: faker.internet.userName(),
             email: faker.internet.email(),
+            created_at:faker.date.between('2022-01-01T00:00:00.000Z', '2022-11-31') // '2026-05-16T02:22:53.002Z'
         })
 
             for (let j = 0; j < randomInt(1,5); j++) {

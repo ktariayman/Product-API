@@ -3,7 +3,7 @@ import {getManager} from "typeorm"
 import { Product } from "../entity/product";
 
 export const getAllProducts= async (req:Request, res:Response) => {
-    const take = 12;
+    const take = 6;
     const page = parseInt(req.query.page as string ||'1')
     const repository = getManager().getRepository(Product)
     const [data , total] = await repository.findAndCount({

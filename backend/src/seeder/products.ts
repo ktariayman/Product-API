@@ -10,7 +10,8 @@ createConnection().then(async connection => {
             await repository.save({
                 title: faker.lorem.word(),
                 description : faker.hacker.phrase(),
-                image:  faker.image.fashion(),
+                // image:  faker.image.business(),
+                image:"https://mk-media.mytek.tn/media/catalog/product/cache/8be3f98b14227a82112b46963246dfe1/l/c/lc32t550.jpg",
                 price: `${10 + i++}`,
             })
         }

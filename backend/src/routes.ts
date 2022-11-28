@@ -7,7 +7,7 @@ import { createProduct, deleteProduct, getAllProducts, getProduct, updateProduct
 import { createRole, deleteRole, getAllRoles, getRole, updateRole } from "./controller/role";
 import { createUser, deleteUser, getAllUsers, getUser, updateUser } from "./controller/users";
 import { authMiddleware } from "./middleware/auth";
-import { exportCSV, getAllOrders } from "./controller/order";
+import { exportCSV, getAllOrders,chart } from "./controller/order";
 import { permissionMiddleware } from "./middleware/permission";
 
 export const routes = (router :Router) => {
@@ -53,5 +53,6 @@ export const routes = (router :Router) => {
 
     router.get('/api/orders' ,authMiddleware, getAllOrders)
     router.post('/api/export' ,authMiddleware, exportCSV)
+    router.get('/api/chart' ,authMiddleware, chart)
 
 }
