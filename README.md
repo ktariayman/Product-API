@@ -1,6 +1,6 @@
 # Node-Typescript-Mysql-Project-
 
-A Product API multi-auth using Node(typeScript) typeorm, Mysql
+A Product API multi-auth using Node(typeScript) typeorm, Mysql & vue Js
 
 Functionalities :
 
